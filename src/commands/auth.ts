@@ -1,11 +1,21 @@
 import type { Command } from "commander";
-import { clearConfig, loadConfig, resolveApiKey, saveConfig } from "../lib/config.js";
+import {
+	clearConfig,
+	listProfiles,
+	loadConfig,
+	removeProfile,
+	resolveApiKey,
+	saveConfig,
+	saveProfile,
+	switchProfile,
+} from "../lib/config.js";
 import { withErrorHandler } from "../lib/errors.js";
-import { isTTY, printDetail, printError, printJson, printSuccess } from "../lib/output.js";
+import { isTTY, printDetail, printError, printJson, printSuccess, printTable, printWarning } from "../lib/output.js";
 
 interface AuthOptions {
 	json?: boolean;
 	apiKey?: string;
+	profile?: string;
 }
 
 export function registerAuthCommands(program: Command): void {
@@ -13,19 +23,29 @@ export function registerAuthCommands(program: Command): void {
 		.command("login")
 		.description("Authenticate with buchida")
 		.option("--api-key <key>", "Set API key directly (skip browser login)")
+		.option("--profile <name>", "Save credentials to a named profile")
 		.option("--json", "Output as JSON")
 		.action(
 			withErrorHandler(async (options: AuthOptions) => {
 				if (options.apiKey) {
 					// Direct API key login
-					const config = loadConfig();
-					config.apiKey = options.apiKey;
-					saveConfig(config);
-
-					if (options.json) {
-						printJson({ success: true, method: "api_key" });
+					if (options.profile) {
+						saveProfile(options.profile, { apiKey: options.apiKey });
+						switchProfile(options.profile);
+						if (options.json) {
+							printJson({ success: true, method: "api_key", profile: options.profile });
+						} else {
+							printSuccess(`API key saved to profile "${options.profile}" and activated.`);
+						}
 					} else {
-						printSuccess("API key saved successfully.");
+						const config = loadConfig();
+						config.apiKey = options.apiKey;
+						saveConfig(config);
+						if (options.json) {
+							printJson({ success: true, method: "api_key" });
+						} else {
+							printSuccess("API key saved successfully.");
+						}
 					}
 					return;
 				}
@@ -55,11 +75,16 @@ export function registerAuthCommands(program: Command): void {
 					process.exit(0);
 				}
 
-				const config = loadConfig();
-				config.apiKey = key as string;
-				saveConfig(config);
-
-				clack.outro("Logged in successfully!");
+				if (options.profile) {
+					saveProfile(options.profile, { apiKey: key as string });
+					switchProfile(options.profile);
+					clack.outro(`Logged in and saved to profile "${options.profile}"!`);
+				} else {
+					const config = loadConfig();
+					config.apiKey = key as string;
+					saveConfig(config);
+					clack.outro("Logged in successfully!");
+				}
 			}),
 		);
 
@@ -108,6 +133,94 @@ export function registerAuthCommands(program: Command): void {
 						["Plan", data.team.plan],
 						["API Key", maskKey(resolveApiKey(options.apiKey) ?? "")],
 					]);
+				}
+			}),
+		);
+
+	// auth subcommand group
+	const auth = program
+		.command("auth")
+		.description("Manage authentication profiles");
+
+	auth
+		.command("switch")
+		.description("Switch to a named profile")
+		.requiredOption("--profile <name>", "Profile name to activate")
+		.option("--json", "Output as JSON")
+		.action(
+			withErrorHandler(async (options: AuthOptions) => {
+				const name = options.profile as string;
+				const success = switchProfile(name);
+
+				if (!success) {
+					if (options.json) {
+						printJson({ success: false, error: `Profile "${name}" not found` });
+					} else {
+						printError(`Profile "${name}" not found. Run \`buchida auth list\` to see available profiles.`);
+					}
+					process.exit(1);
+				}
+
+				if (options.json) {
+					printJson({ success: true, activeProfile: name });
+				} else {
+					printSuccess(`Switched to profile "${name}".`);
+				}
+			}),
+		);
+
+	auth
+		.command("list")
+		.description("List all saved profiles")
+		.option("--json", "Output as JSON")
+		.action(
+			withErrorHandler(async (options: AuthOptions) => {
+				const profiles = listProfiles();
+
+				if (options.json) {
+					printJson(profiles);
+					return;
+				}
+
+				if (profiles.length === 0) {
+					printWarning("No profiles saved. Use `buchida login --profile <name>` to create one.");
+					return;
+				}
+
+				const headers = ["Profile", "API Key", "Active"];
+				const rows = profiles.map((p) => [
+					p.name,
+					p.apiKey ? maskKey(p.apiKey) : "(not set)",
+					p.active ? "*" : "",
+				]);
+
+				printTable(headers, rows);
+			}),
+		);
+
+	auth
+		.command("remove")
+		.description("Remove a saved profile")
+		.requiredOption("--profile <name>", "Profile name to remove")
+		.option("--json", "Output as JSON")
+		.action(
+			withErrorHandler(async (options: AuthOptions) => {
+				const name = options.profile as string;
+				const success = removeProfile(name);
+
+				if (!success) {
+					if (options.json) {
+						printJson({ success: false, error: `Profile "${name}" not found` });
+					} else {
+						printError(`Profile "${name}" not found.`);
+					}
+					process.exit(1);
+				}
+
+				if (options.json) {
+					printJson({ success: true, removed: name });
+				} else {
+					printSuccess(`Profile "${name}" removed.`);
 				}
 			}),
 		);
