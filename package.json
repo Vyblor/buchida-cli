@@ -1,0 +1,54 @@
+{
+	"name": "buchida-cli",
+	"version": "0.1.0",
+	"description": "CLI for buchida email API — send emails, manage domains, API keys, and more",
+	"type": "module",
+	"bin": {
+		"buchida": "./dist/index.js"
+	},
+	"main": "./dist/index.js",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --banner:js=\"#!/usr/bin/env node\" --external:@clack/prompts --external:commander",
+		"dev": "tsx src/index.ts",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
+		"format": "biome format --write .",
+		"typecheck": "tsc --noEmit",
+		"clean": "rm -rf dist coverage"
+	},
+	"keywords": [
+		"email",
+		"api",
+		"cli",
+		"buchida",
+		"cjk",
+		"smtp"
+	],
+	"author": "buchida",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Vyblor/buchida-cli.git"
+	},
+	"homepage": "https://buchida.com/docs/cli",
+	"engines": {
+		"node": ">=20"
+	},
+	"dependencies": {
+		"@clack/prompts": "^0.10.0",
+		"commander": "^14.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.0",
+		"@types/node": "^22.0.0",
+		"esbuild": "^0.24.0",
+		"tsx": "^4.19.0",
+		"typescript": "^5.7.0",
+		"vitest": "^3.0.0"
+	}
+}
