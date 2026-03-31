@@ -1,11 +1,11 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 // We test the config resolution logic directly
 describe("config resolution", () => {
-	const testDir = join(tmpdir(), "buchida-cli-test-" + Date.now());
+	const testDir = join(tmpdir(), `buchida-cli-test-${Date.now()}`);
 	const configDir = join(testDir, ".buchida");
 	const configPath = join(configDir, "config.json");
 
@@ -15,7 +15,7 @@ describe("config resolution", () => {
 
 	afterEach(() => {
 		rmSync(testDir, { recursive: true, force: true });
-		delete process.env.NSEND_API_KEY;
+		process.env.NSEND_API_KEY = undefined;
 	});
 
 	it("resolves API key from explicit flag first", () => {

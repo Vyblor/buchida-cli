@@ -26,9 +26,7 @@ interface DomainOptions {
 }
 
 export function registerDomainsCommand(program: Command): void {
-	const domains = program
-		.command("domains")
-		.description("Manage email domains");
+	const domains = program.command("domains").description("Manage email domains");
 
 	domains
 		.command("list")
@@ -52,13 +50,7 @@ export function registerDomainsCommand(program: Command): void {
 
 				printTable(
 					["ID", "Domain", "Status", "Region", "Created"],
-					data.data.map((d) => [
-						d.id,
-						d.name,
-						d.status,
-						d.region,
-						formatDate(d.created_at),
-					]),
+					data.data.map((d) => [d.id, d.name, d.status, d.region, formatDate(d.created_at)]),
 				);
 			}),
 		);
@@ -86,12 +78,7 @@ export function registerDomainsCommand(program: Command): void {
 					console.log("\n\x1b[1mAdd these DNS records to verify your domain:\x1b[0m\n");
 					printTable(
 						["Type", "Name", "Value", "Priority"],
-						data.dns_records.map((r) => [
-							r.type,
-							r.name,
-							r.value,
-							r.priority?.toString() ?? "—",
-						]),
+						data.dns_records.map((r) => [r.type, r.name, r.value, r.priority?.toString() ?? "—"]),
 					);
 					console.log("\nRun `buchida domains verify %s` after adding records.", domain);
 				}

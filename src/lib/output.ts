@@ -16,7 +16,7 @@ export function printJson(data: unknown): void {
 	console.log(JSON.stringify(data, null, "\t"));
 }
 
-export function printError(message: string, json: boolean = false): void {
+export function printError(message: string, json = false): void {
 	if (json) {
 		console.error(JSON.stringify({ error: message }));
 	} else {

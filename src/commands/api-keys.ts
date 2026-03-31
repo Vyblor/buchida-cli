@@ -1,7 +1,14 @@
 import type { Command } from "commander";
 import { apiRequest } from "../lib/client.js";
 import { withErrorHandler } from "../lib/errors.js";
-import { formatDate, isTTY, printJson, printSuccess, printTable, printWarning } from "../lib/output.js";
+import {
+	formatDate,
+	isTTY,
+	printJson,
+	printSuccess,
+	printTable,
+	printWarning,
+} from "../lib/output.js";
 
 interface ApiKey {
 	id: string;
@@ -18,9 +25,7 @@ interface KeyOptions {
 }
 
 export function registerApiKeysCommand(program: Command): void {
-	const keys = program
-		.command("api-keys")
-		.description("Manage API keys");
+	const keys = program.command("api-keys").description("Manage API keys");
 
 	keys
 		.command("list")

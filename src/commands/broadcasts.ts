@@ -20,9 +20,7 @@ interface BroadcastOptions {
 }
 
 export function registerBroadcastsCommand(program: Command): void {
-	const broadcasts = program
-		.command("broadcasts")
-		.description("Manage broadcast emails");
+	const broadcasts = program.command("broadcasts").description("Manage broadcast emails");
 
 	broadcasts
 		.command("list")

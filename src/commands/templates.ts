@@ -24,9 +24,7 @@ interface TemplateOptions {
 }
 
 export function registerTemplatesCommand(program: Command): void {
-	const templates = program
-		.command("templates")
-		.description("Manage email templates");
+	const templates = program.command("templates").description("Manage email templates");
 
 	templates
 		.command("list")

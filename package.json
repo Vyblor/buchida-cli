@@ -7,9 +7,7 @@
 		"buchida": "./dist/index.js"
 	},
 	"main": "./dist/index.js",
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
 		"build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --banner:js=\"#!/usr/bin/env node\" --external:@clack/prompts --external:commander",
 		"dev": "tsx src/index.ts",
@@ -21,14 +19,7 @@
 		"typecheck": "tsc --noEmit",
 		"clean": "rm -rf dist coverage"
 	},
-	"keywords": [
-		"email",
-		"api",
-		"cli",
-		"buchida",
-		"cjk",
-		"smtp"
-	],
+	"keywords": ["email", "api", "cli", "buchida", "cjk", "smtp"],
 	"author": "buchida",
 	"license": "MIT",
 	"repository": {

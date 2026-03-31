@@ -17,8 +17,7 @@ export function withErrorHandler<T extends (...args: any[]) => Promise<void>>(fn
 				args[args.length - 1] !== null &&
 				"json" in (args[args.length - 1] as Record<string, unknown>);
 
-			const useJson =
-				json && (args[args.length - 1] as Record<string, boolean>).json === true;
+			const useJson = json && (args[args.length - 1] as Record<string, boolean>).json === true;
 
 			if (err instanceof BuchidaApiError) {
 				if (useJson) {
@@ -32,9 +31,7 @@ export function withErrorHandler<T extends (...args: any[]) => Promise<void>>(fn
 				} else {
 					printError(err.message);
 					if (err.status === 401) {
-						console.error(
-							"  Run `buchida login` or set NSEND_API_KEY to authenticate.",
-						);
+						console.error("  Run `buchida login` or set NSEND_API_KEY to authenticate.");
 					}
 				}
 				process.exit(1);

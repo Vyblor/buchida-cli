@@ -31,8 +31,7 @@ export function registerInitCommand(program: Command): void {
 					const result = await clack.text({
 						message: "Enter your API key:",
 						placeholder: "bc_live_...",
-						validate: (v) =>
-							!v.startsWith("bc_") ? "API key must start with bc_" : undefined,
+						validate: (v) => (!v.startsWith("bc_") ? "API key must start with bc_" : undefined),
 					});
 					if (clack.isCancel(result)) {
 						clack.cancel("Init cancelled.");
@@ -48,7 +47,9 @@ export function registerInitCommand(program: Command): void {
 				const envContent = `# buchida API key\nNSEND_API_KEY=${apiKey ?? "bc_live_your_key_here"}\n`;
 
 				if (existsSync(targetEnv)) {
-					printWarning(`${targetEnv} already exists. Add manually:\n  NSEND_API_KEY=${apiKey ?? "bc_live_..."}`);
+					printWarning(
+						`${targetEnv} already exists. Add manually:\n  NSEND_API_KEY=${apiKey ?? "bc_live_..."}`,
+					);
 				} else {
 					writeFileSync(targetEnv, envContent, "utf-8");
 					created.push(targetEnv);
@@ -87,7 +88,9 @@ export function registerInitCommand(program: Command): void {
 					console.log("  PHP:    composer require buchida/buchida-php");
 				}
 
-				console.log("\nQuick start: buchida send --from you@example.com --to test@test.com --subject 'Hello' --text 'World'");
+				console.log(
+					"\nQuick start: buchida send --from you@example.com --to test@test.com --subject 'Hello' --text 'World'",
+				);
 			}),
 		);
 }

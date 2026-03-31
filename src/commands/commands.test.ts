@@ -40,7 +40,7 @@ describe("command registration", () => {
 		registerEmailsCommand(program);
 		const emails = program.commands.find((c) => c.name() === "emails");
 		expect(emails).toBeDefined();
-		const subs = emails!.commands.map((c) => c.name());
+		const subs = emails?.commands.map((c) => c.name());
 		expect(subs).toContain("list");
 		expect(subs).toContain("get");
 	});
@@ -50,7 +50,7 @@ describe("command registration", () => {
 		registerDomainsCommand(program);
 		const domains = program.commands.find((c) => c.name() === "domains");
 		expect(domains).toBeDefined();
-		const subs = domains!.commands.map((c) => c.name());
+		const subs = domains?.commands.map((c) => c.name());
 		expect(subs).toContain("list");
 		expect(subs).toContain("add");
 		expect(subs).toContain("verify");
@@ -61,7 +61,7 @@ describe("command registration", () => {
 		registerApiKeysCommand(program);
 		const keys = program.commands.find((c) => c.name() === "api-keys");
 		expect(keys).toBeDefined();
-		const subs = keys!.commands.map((c) => c.name());
+		const subs = keys?.commands.map((c) => c.name());
 		expect(subs).toContain("list");
 		expect(subs).toContain("create");
 		expect(subs).toContain("delete");
@@ -72,7 +72,7 @@ describe("command registration", () => {
 		registerWebhooksCommand(program);
 		const webhooks = program.commands.find((c) => c.name() === "webhooks");
 		expect(webhooks).toBeDefined();
-		const subs = webhooks!.commands.map((c) => c.name());
+		const subs = webhooks?.commands.map((c) => c.name());
 		expect(subs).toContain("list");
 		expect(subs).toContain("create");
 		expect(subs).toContain("delete");
@@ -83,7 +83,7 @@ describe("command registration", () => {
 		registerTemplatesCommand(program);
 		const templates = program.commands.find((c) => c.name() === "templates");
 		expect(templates).toBeDefined();
-		const subs = templates!.commands.map((c) => c.name());
+		const subs = templates?.commands.map((c) => c.name());
 		expect(subs).toContain("list");
 		expect(subs).toContain("get");
 	});
@@ -93,7 +93,7 @@ describe("command registration", () => {
 		registerBroadcastsCommand(program);
 		const broadcasts = program.commands.find((c) => c.name() === "broadcasts");
 		expect(broadcasts).toBeDefined();
-		const subs = broadcasts!.commands.map((c) => c.name());
+		const subs = broadcasts?.commands.map((c) => c.name());
 		expect(subs).toContain("list");
 		expect(subs).toContain("create");
 		expect(subs).toContain("send");
@@ -122,7 +122,7 @@ describe("command registration", () => {
 		registerCompletionsCommand(program);
 		const completions = program.commands.find((c) => c.name() === "completions");
 		expect(completions).toBeDefined();
-		const subs = completions!.commands.map((c) => c.name());
+		const subs = completions?.commands.map((c) => c.name());
 		expect(subs).toContain("bash");
 		expect(subs).toContain("zsh");
 		expect(subs).toContain("fish");
@@ -135,7 +135,7 @@ describe("command options", () => {
 		registerSendCommand(program);
 		const send = program.commands.find((c) => c.name() === "send");
 		expect(send).toBeDefined();
-		const optionNames = send!.options.map((o) => o.long);
+		const optionNames = send?.options.map((o) => o.long);
 		expect(optionNames).toContain("--from");
 		expect(optionNames).toContain("--to");
 		expect(optionNames).toContain("--subject");

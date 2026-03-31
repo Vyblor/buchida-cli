@@ -27,9 +27,7 @@ interface ListOptions {
 }
 
 export function registerEmailsCommand(program: Command): void {
-	const emails = program
-		.command("emails")
-		.description("Manage sent emails");
+	const emails = program.command("emails").description("Manage sent emails");
 
 	emails
 		.command("list")
@@ -44,10 +42,9 @@ export function registerEmailsCommand(program: Command): void {
 					has_more: boolean;
 				}
 
-				const data = await apiRequest<ListResponse>(
-					`/v1/emails?limit=${options.limit ?? "20"}`,
-					{ apiKey: options.apiKey },
-				);
+				const data = await apiRequest<ListResponse>(`/v1/emails?limit=${options.limit ?? "20"}`, {
+					apiKey: options.apiKey,
+				});
 
 				if (options.json) {
 					printJson(data);

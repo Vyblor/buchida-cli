@@ -44,7 +44,7 @@ export function registerMetricsCommand(program: Command): void {
 
 				console.log(`\x1b[1mbuchida metrics (${data.period})\x1b[0m\n`);
 
-				const bar = (value: number, max: number, width: number = 30): string => {
+				const bar = (value: number, max: number, width = 30): string => {
 					const filled = max > 0 ? Math.round((value / max) * width) : 0;
 					return `${"█".repeat(filled)}${"░".repeat(width - filled)}`;
 				};
@@ -64,9 +64,7 @@ export function registerMetricsCommand(program: Command): void {
 					const paddedLabel = label.padEnd(12);
 					const paddedValue = value.toString().padStart(8);
 					const rateStr = rate ? ` (${rate})` : "";
-					console.log(
-						`  ${paddedLabel} ${bar(value, maxVal)} ${paddedValue}${rateStr}`,
-					);
+					console.log(`  ${paddedLabel} ${bar(value, maxVal)} ${paddedValue}${rateStr}`);
 				}
 				console.log();
 			}),

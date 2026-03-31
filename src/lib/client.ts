@@ -32,8 +32,7 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
 	if (!apiKey) {
 		throw new BuchidaApiError({
 			status: 401,
-			message:
-				"No API key found. Run `buchida login` or set NSEND_API_KEY environment variable.",
+			message: "No API key found. Run `buchida login` or set NSEND_API_KEY environment variable.",
 			code: "missing_api_key",
 		});
 	}

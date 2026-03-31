@@ -73,11 +73,11 @@ export function registerDevCommand(program: Command): void {
 						req.on("end", () => {
 							try {
 								const email = JSON.parse(body);
-								console.log(
-									`\n\x1b[36m── New Email ──\x1b[0m`,
-								);
+								console.log("\n\x1b[36m── New Email ──\x1b[0m");
 								console.log(`  From:    ${email.from ?? "—"}`);
-								console.log(`  To:      ${Array.isArray(email.to) ? email.to.join(", ") : email.to ?? "—"}`);
+								console.log(
+									`  To:      ${Array.isArray(email.to) ? email.to.join(", ") : (email.to ?? "—")}`,
+								);
 								console.log(`  Subject: ${email.subject ?? "—"}`);
 								console.log(`  Body:    ${(email.text ?? email.html ?? "").slice(0, 100)}`);
 
