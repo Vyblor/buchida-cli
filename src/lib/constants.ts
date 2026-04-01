@@ -4,7 +4,7 @@ export const CONFIG_FILE = "config.json";
 export const PACKAGE_NAME = "buchida-cli";
 export const BINARY_NAME = "buchida";
 
-export const API_KEY_ENV = "NSEND_API_KEY";
+export const API_KEY_ENV = "BUCHIDA_API_KEY";
 export const API_URL_ENV = "BUCHIDA_API_URL";
 
 export const API_KEY_PREFIX = {

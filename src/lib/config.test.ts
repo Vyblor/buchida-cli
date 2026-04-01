@@ -15,22 +15,22 @@ describe("config resolution", () => {
 
 	afterEach(() => {
 		rmSync(testDir, { recursive: true, force: true });
-		process.env.NSEND_API_KEY = undefined;
+		process.env.BUCHIDA_API_KEY = undefined;
 	});
 
 	it("resolves API key from explicit flag first", () => {
-		process.env.NSEND_API_KEY = "bc_test_env_key";
+		process.env.BUCHIDA_API_KEY = "bc_test_env_key";
 		// Simulate the resolution logic
 		const flag = "bc_live_explicit";
-		const env = process.env.NSEND_API_KEY;
+		const env = process.env.BUCHIDA_API_KEY;
 		const result = flag || env || undefined;
 		expect(result).toBe("bc_live_explicit");
 	});
 
 	it("resolves API key from env when no flag", () => {
-		process.env.NSEND_API_KEY = "bc_test_env_key";
+		process.env.BUCHIDA_API_KEY = "bc_test_env_key";
 		const flag = undefined;
-		const env = process.env.NSEND_API_KEY;
+		const env = process.env.BUCHIDA_API_KEY;
 		const result = flag || env || undefined;
 		expect(result).toBe("bc_test_env_key");
 	});

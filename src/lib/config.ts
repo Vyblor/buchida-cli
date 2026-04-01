@@ -132,7 +132,7 @@ export function removeProfile(name: string): boolean {
 /**
  * Resolve API key with precedence:
  * 1. --api-key flag (explicit)
- * 2. NSEND_API_KEY env var
+ * 2. BUCHIDA_API_KEY env var
  * 3. Active profile from config
  * 4. Config file (~/.buchida/config.json)
  */

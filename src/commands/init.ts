@@ -44,11 +44,11 @@ export function registerInitCommand(program: Command): void {
 
 				// Create .env or .env.local
 				const targetEnv = existsSync(envPath) ? envLocalPath : envPath;
-				const envContent = `# buchida API key\nNSEND_API_KEY=${apiKey ?? "bc_live_your_key_here"}\n`;
+				const envContent = `# buchida API key\nBUCHIDA_API_KEY=${apiKey ?? "bc_live_your_key_here"}\n`;
 
 				if (existsSync(targetEnv)) {
 					printWarning(
-						`${targetEnv} already exists. Add manually:\n  NSEND_API_KEY=${apiKey ?? "bc_live_..."}`,
+						`${targetEnv} already exists. Add manually:\n  BUCHIDA_API_KEY=${apiKey ?? "bc_live_..."}`,
 					);
 				} else {
 					writeFileSync(targetEnv, envContent, "utf-8");

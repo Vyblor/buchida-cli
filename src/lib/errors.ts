@@ -31,7 +31,7 @@ export function withErrorHandler<T extends (...args: any[]) => Promise<void>>(fn
 				} else {
 					printError(err.message);
 					if (err.status === 401) {
-						console.error("  Run `buchida login` or set NSEND_API_KEY to authenticate.");
+						console.error("  Run `buchida login` or set BUCHIDA_API_KEY to authenticate.");
 					}
 				}
 				process.exit(1);
