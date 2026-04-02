@@ -1,13 +1,13 @@
 {
 	"name": "@buchida/cli",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "CLI for buchida email API — send emails, manage domains, API keys, and more",
 	"type": "module",
 	"bin": {
 		"buchida": "./dist/index.js"
 	},
 	"main": "./dist/index.js",
-	"files": ["dist"],
+	"files": ["dist", "README.md"],
 	"scripts": {
 		"build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --banner:js=\"#!/usr/bin/env node\" --external:@clack/prompts --external:commander",
 		"dev": "tsx src/index.ts",
