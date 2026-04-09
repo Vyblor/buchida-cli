@@ -15,9 +15,14 @@ interface SendOptions {
 }
 
 interface SendResponse {
-	id: string;
-	from: string;
-	to: string[];
+	data: {
+		id: string;
+		from: string;
+		to: string[];
+	};
+	id?: string; // backward compat
+	from?: string;
+	to?: string[];
 	subject: string;
 	status: string;
 }
@@ -140,7 +145,7 @@ export function registerSendCommand(program: Command): void {
 				if (options.json) {
 					printJson(result);
 				} else {
-					printSuccess(`Email sent! ID: ${result.id}`);
+					printSuccess(`Email sent! ID: ${result.data?.id ?? result.id}`);
 				}
 			}),
 		);
