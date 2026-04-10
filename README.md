@@ -1,17 +1,10 @@
-<div align="center">
-  <img src="assets/logo-black.svg" alt="buchida" width="280" />
-  <p><strong>Command-line interface for the buchida email API</strong></p>
+# @buchida/cli
 
-  [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [中文](README.zh.md)
+**buchida CLI — Email API for AI agents**
 
-  [![npm version](https://img.shields.io/npm/v/@buchida/cli)](https://www.npmjs.com/package/@buchida/cli) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-</div>
+@buchida/cli is the official command-line interface for **buchida** — an email API built for AI agents. buchida ships a CLI, an MCP server, and SDKs in 5 languages (Node, Python, Go, Ruby, Java), all sharing the same REST API surface. `@buchida/email` templates render Korean, Japanese, and Chinese natively.
 
----
-
-The official CLI for the [buchida](https://buchida.com) email API. Send emails, manage domains, and view analytics from your terminal.
-
-## Installation
+## Install
 
 ```bash
 npx @buchida/cli
@@ -23,40 +16,34 @@ Or install globally:
 npm install -g @buchida/cli
 ```
 
-## Quick Start
+## Send your first email
 
 ```bash
-# Authenticate
-buchida login
+$ buchida emails send \
+    --from hello@yourapp.com \
+    --to user@example.com \
+    --subject "Hello" \
+    --html "<h1>Welcome</h1>"
 
-# Send an email
-buchida send \
-  --from hi@example.com \
-  --to user@example.com \
-  --subject "Hello from buchida" \
-  --html "<h1>Hello!</h1>"
-
-# Check email status
-buchida emails list
-
-# Manage domains
-buchida domains list
-buchida domains add yourdomain.com
+✓ Email sent (id: em_abc123)
 ```
-
-## Features
-
-- Interactive setup with `buchida login`
-- Send emails directly from the terminal
-- Manage domains, API keys, and templates
-- View delivery metrics and analytics
-- Tab completion for bash/zsh
 
 ## Documentation
 
-- [Quick Start](https://buchida.com/docs/quickstart)
-- [CLI Reference](https://buchida.com/docs/cli)
-- [GitHub](https://github.com/Vyblor/buchida-cli)
+Full docs: **[buchida.com/docs](https://buchida.com/docs)**
+
+- API reference: https://buchida.com/docs/api-reference
+- Quickstart guide: https://buchida.com/docs/quickstart
+- CJK email templates: https://buchida.com/docs/templates
+- MCP server setup: https://buchida.com/docs/mcp
+- CLI reference: https://buchida.com/docs/cli
+
+## Links
+
+- **Website:** [buchida.com](https://buchida.com)
+- **Documentation:** [buchida.com/docs](https://buchida.com/docs)
+- **Pricing:** [buchida.com/pricing](https://buchida.com/pricing)
+- **GitHub:** https://github.com/Vyblor/buchida-cli
 
 ## License
 
