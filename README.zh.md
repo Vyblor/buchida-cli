@@ -1,15 +1,15 @@
 <div align="center">
   <img src="assets/logo-black.svg" alt="buchida" width="280" />
-  <p><strong>buchida邮件API命令行工具</strong></p>
+  <p><strong>buchida CLI — 为 AI 代理打造的邮件 API</strong></p>
 
-  [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [中文](README.zh.md)
+  [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [**中文**](README.zh.md)
 
   [![npm version](https://img.shields.io/npm/v/@buchida/cli)](https://www.npmjs.com/package/@buchida/cli) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 </div>
 
 ---
 
-[buchida](https://buchida.com)邮件API的官方CLI。在终端中发送邮件、管理域名和查看分析数据。
+@buchida/cli 是为 AI 代理打造的邮件 API 的官方命令行工具。buchida 提供 CLI、MCP 服务器和 5 种语言的 SDK (Node、Python、Go、Ruby、Java),所有这些都共享相同的 REST API 表面。`@buchida/email` 模板原生渲染韩语、日语和中文。
 
 ## 安装
 
@@ -23,40 +23,34 @@ npx @buchida/cli
 npm install -g @buchida/cli
 ```
 
-## 快速开始
+## 发送您的第一封邮件
 
 ```bash
-# 认证
-buchida login
+$ buchida emails send \
+    --from hello@yourapp.com \
+    --to user@example.com \
+    --subject "你好" \
+    --html "<h1>欢迎</h1>"
 
-# 发送邮件
-buchida send \
-  --from hi@example.com \
-  --to user@example.com \
-  --subject "来自buchida的邮件" \
-  --html "<h1>你好！</h1>"
-
-# 查看邮件状态
-buchida emails list
-
-# 管理域名
-buchida domains list
-buchida domains add yourdomain.com
+✓ Email sent (id: em_abc123)
 ```
-
-## 特性
-
-- 通过`buchida login`交互式配置
-- 直接从终端发送邮件
-- 管理域名、API密钥和模板
-- 查看发送指标和分析数据
-- bash/zsh Tab自动补全
 
 ## 文档
 
-- [快速开始](https://buchida.com/zh/docs/quickstart)
-- [CLI参考](https://buchida.com/zh/docs/cli)
-- [GitHub](https://github.com/Vyblor/buchida-cli)
+完整文档: **[buchida.com/docs](https://buchida.com/docs)**
+
+- API 参考: https://buchida.com/docs/api-reference
+- 快速入门指南: https://buchida.com/docs/quickstart
+- CJK 邮件模板: https://buchida.com/docs/templates
+- MCP 服务器设置: https://buchida.com/docs/mcp
+- CLI 参考: https://buchida.com/docs/cli
+
+## 链接
+
+- **网站:** [buchida.com](https://buchida.com)
+- **文档:** [buchida.com/docs](https://buchida.com/docs)
+- **定价:** [buchida.com/pricing](https://buchida.com/pricing)
+- **GitHub:** https://github.com/Vyblor/buchida-cli
 
 ## 许可证
 
