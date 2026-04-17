@@ -1,4 +1,5 @@
 import { Command } from "commander";
+import pkg from "../package.json" with { type: "json" };
 import { registerApiKeysCommand } from "./commands/api-keys.js";
 import { registerAuthCommands } from "./commands/auth.js";
 import { registerBroadcastsCommand } from "./commands/broadcasts.js";
@@ -18,7 +19,7 @@ const program = new Command();
 program
 	.name(BINARY_NAME)
 	.description("buchida CLI — send emails, manage domains, and more")
-	.version("0.1.0", "-v, --version")
+	.version(pkg.version, "-v, --version")
 	.option("--api-key <key>", "API key (overrides env and config)")
 	.option("--json", "Output as JSON (for all commands)");
 
@@ -56,7 +57,7 @@ async function checkForUpdates(): Promise<void> {
 		if (!res.ok) return;
 
 		const data = (await res.json()) as { version: string };
-		const current = program.version() ?? "0.0.0";
+		const current = pkg.version;
 		if (data.version !== current) {
 			console.error(
 				`\x1b[33m\nUpdate available: ${current} → ${data.version}\nRun: npm install -g ${PACKAGE_NAME}\x1b[0m\n`,
