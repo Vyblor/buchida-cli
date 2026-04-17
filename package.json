@@ -1,6 +1,6 @@
 {
 	"name": "@buchida/cli",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "CLI for buchida email API — send emails, manage domains, API keys, and more",
 	"type": "module",
 	"bin": {

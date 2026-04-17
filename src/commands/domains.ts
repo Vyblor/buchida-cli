@@ -48,9 +48,14 @@ export function registerDomainsCommand(program: Command): void {
 					return;
 				}
 
+				if (data.data.length === 0) {
+					console.log("No domains registered. Add one at https://buchida.com/dashboard/domains");
+					return;
+				}
+
 				printTable(
-					["ID", "Domain", "Status", "Region", "Created"],
-					data.data.map((d) => [d.id, d.name, d.status, d.region, formatDate(d.created_at)]),
+					["Domain", "Status", "Region", "Created"],
+					data.data.map((d) => [d.name, d.status, d.region, formatDate(d.created_at)]),
 				);
 			}),
 		);

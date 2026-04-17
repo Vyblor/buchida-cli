@@ -1,5 +1,5 @@
 import { BuchidaApiError } from "./client.js";
-import { printError } from "./output.js";
+import { printError, printHint } from "./output.js";
 
 /**
  * Wrap a command handler with consistent error handling.
@@ -26,12 +26,16 @@ export function withErrorHandler<T extends (...args: any[]) => Promise<void>>(fn
 							error: err.message,
 							status: err.status,
 							code: err.code,
+							hint: err.hint,
 						}),
 					);
 				} else {
 					printError(err.message);
 					if (err.status === 401) {
 						console.error("  Run `buchida login` or set BUCHIDA_API_KEY to authenticate.");
+					}
+					if (err.hint) {
+						printHint(err.hint);
 					}
 				}
 				process.exit(1);
