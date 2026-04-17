@@ -1,3 +1,4 @@
+import pkg from "../../package.json" with { type: "json" };
 import { resolveApiKey, resolveApiUrl } from "./config.js";
 
 export interface ApiError {
@@ -41,7 +42,7 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
 	const headers: Record<string, string> = {
 		Authorization: `Bearer ${apiKey}`,
 		"Content-Type": "application/json",
-		"User-Agent": "buchida-cli/0.1.0",
+		"User-Agent": `buchida-cli/${pkg.version}`,
 	};
 
 	const response = await fetch(url, {
