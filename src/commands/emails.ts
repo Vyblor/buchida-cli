@@ -16,6 +16,7 @@ interface EmailDetail extends EmailSummary {
 	html?: string;
 	text?: string;
 	reply_to?: string;
+	from_name?: string | null;
 	headers?: Record<string, string>;
 	events?: { type: string; timestamp: string }[];
 }
@@ -83,7 +84,7 @@ export function registerEmailsCommand(program: Command): void {
 
 				printDetail([
 					["ID", data.id],
-					["From", data.from],
+					["From", data.from_name ? `${data.from_name} <${data.from}>` : data.from],
 					["To", data.to.join(", ")],
 					["Subject", data.subject],
 					["Status", data.status],

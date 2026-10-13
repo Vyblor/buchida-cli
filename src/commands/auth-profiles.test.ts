@@ -1,7 +1,7 @@
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 /**
  * Tests for the multi-profile auth system.
@@ -79,7 +79,10 @@ describe("multi-profile auth", () => {
 			writeConfig(config);
 
 			// Simulate switch by updating activeProfile
-			const loaded = readConfig() as { activeProfile?: string; profiles: Record<string, { apiKey: string }> };
+			const loaded = readConfig() as {
+				activeProfile?: string;
+				profiles: Record<string, { apiKey: string }>;
+			};
 			loaded.activeProfile = "staging";
 			writeConfig(loaded);
 
@@ -194,7 +197,8 @@ describe("multi-profile auth", () => {
 				profiles: Record<string, unknown>;
 				activeProfile?: string;
 			};
-			delete loaded.profiles.staging;
+			const { staging: _removed, ...remaining } = loaded.profiles;
+			loaded.profiles = remaining;
 			if (loaded.activeProfile === "staging") {
 				loaded.activeProfile = undefined;
 			}

@@ -10,7 +10,15 @@ import {
 	switchProfile,
 } from "../lib/config.js";
 import { withErrorHandler } from "../lib/errors.js";
-import { isTTY, printDetail, printError, printJson, printSuccess, printTable, printWarning } from "../lib/output.js";
+import {
+	isTTY,
+	printDetail,
+	printError,
+	printJson,
+	printSuccess,
+	printTable,
+	printWarning,
+} from "../lib/output.js";
 
 interface AuthOptions {
 	json?: boolean;
@@ -138,9 +146,7 @@ export function registerAuthCommands(program: Command): void {
 		);
 
 	// auth subcommand group
-	const auth = program
-		.command("auth")
-		.description("Manage authentication profiles");
+	const auth = program.command("auth").description("Manage authentication profiles");
 
 	auth
 		.command("switch")
@@ -156,7 +162,9 @@ export function registerAuthCommands(program: Command): void {
 					if (options.json) {
 						printJson({ success: false, error: `Profile "${name}" not found` });
 					} else {
-						printError(`Profile "${name}" not found. Run \`buchida auth list\` to see available profiles.`);
+						printError(
+							`Profile "${name}" not found. Run \`buchida auth list\` to see available profiles.`,
+						);
 					}
 					process.exit(1);
 				}

@@ -28,6 +28,7 @@ npm install -g @buchida/cli
 ```bash
 $ buchida emails send \
     --from hello@yourapp.com \
+    --from-name "Your App" \
     --to user@example.com \
     --subject "Hello" \
     --html "<h1>Welcome</h1>"

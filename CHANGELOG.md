@@ -1,3 +1,9 @@
+## 0.1.7 — 2026-10-13
+
+### Added
+- `buchida send --from-name <name>` sets the sender display name (API field `from_name`). `--from` also accepts `"Name <addr>"`.
+- `buchida emails get` shows the sender as `Name <addr>` when the email has a `from_name`.
+
 ## 0.1.6 — 2026-04-17
 
 ### Added

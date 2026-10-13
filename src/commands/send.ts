@@ -5,6 +5,7 @@ import { isTTY, printJson, printSuccess } from "../lib/output.js";
 
 interface SendOptions {
 	from?: string;
+	fromName?: string;
 	to?: string;
 	subject?: string;
 	html?: string;
@@ -31,7 +32,11 @@ export function registerSendCommand(program: Command): void {
 	program
 		.command("send")
 		.description("Send an email")
-		.option("--from <address>", "Sender email address")
+		.option(
+			"--from <address>",
+			'Sender email address ("you@example.com" or "Name <you@example.com>")',
+		)
+		.option("--from-name <name>", "Sender display name (overrides any name in --from)")
 		.option("--to <address>", "Recipient email address (comma-separated for multiple)")
 		.option("--subject <subject>", "Email subject line")
 		.option("--html <html>", "HTML body")
@@ -134,6 +139,7 @@ export function registerSendCommand(program: Command): void {
 					apiKey: options.apiKey,
 					body: {
 						from,
+						from_name: options.fromName,
 						to: toAddresses,
 						subject,
 						html,

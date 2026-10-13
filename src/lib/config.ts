@@ -60,10 +60,10 @@ export function clearConfig(): void {
  */
 export function getActiveProfileConfig(): BuchidaConfig {
 	const config = loadConfig();
-	if (!config.activeProfile || !config.profiles?.[config.activeProfile]) {
+	const profile = config.activeProfile ? config.profiles?.[config.activeProfile] : undefined;
+	if (!profile) {
 		return config;
 	}
-	const profile = config.profiles[config.activeProfile];
 	return {
 		...config,
 		apiKey: profile.apiKey ?? config.apiKey,
@@ -101,7 +101,12 @@ export function switchProfile(name: string): boolean {
 /**
  * List all available profiles with their active status.
  */
-export function listProfiles(): { name: string; active: boolean; apiKey?: string; apiUrl?: string }[] {
+export function listProfiles(): {
+	name: string;
+	active: boolean;
+	apiKey?: string;
+	apiUrl?: string;
+}[] {
 	const config = loadConfig();
 	const profiles = config.profiles ?? {};
 	return Object.entries(profiles).map(([name, profile]) => ({
