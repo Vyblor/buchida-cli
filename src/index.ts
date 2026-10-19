@@ -13,6 +13,7 @@ import { registerSendCommand } from "./commands/send.js";
 import { registerTemplatesCommand } from "./commands/templates.js";
 import { registerWebhooksCommand } from "./commands/webhooks.js";
 import { BINARY_NAME, PACKAGE_NAME } from "./lib/constants.js";
+import { applyGlobalOptions } from "./lib/global-options.js";
 
 const program = new Command();
 
@@ -22,6 +23,8 @@ program
 	.version(pkg.version, "-v, --version")
 	.option("--api-key <key>", "API key (overrides env and config)")
 	.option("--json", "Output as JSON (for all commands)");
+
+applyGlobalOptions(program);
 
 // Register all commands
 registerAuthCommands(program);

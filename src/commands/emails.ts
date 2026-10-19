@@ -25,6 +25,30 @@ interface ListOptions {
 	json?: boolean;
 	apiKey?: string;
 	limit?: string;
+	cursor?: string;
+	status?: string;
+	from?: string;
+	to?: string;
+}
+
+interface ListResponse {
+	data: EmailSummary[];
+	/** Current API field. */
+	hasMore?: boolean;
+	/** Legacy field name, kept as a fallback. */
+	has_more?: boolean;
+	cursor?: string | null;
+}
+
+/** Build the /v1/emails query string. With only `limit` it is identical to the old request. */
+export function buildEmailsListQuery(options: ListOptions): string {
+	const params = new URLSearchParams();
+	params.set("limit", options.limit ?? "20");
+	if (options.cursor) params.set("cursor", options.cursor);
+	if (options.status) params.set("status", options.status);
+	if (options.from) params.set("from", options.from);
+	if (options.to) params.set("to", options.to);
+	return params.toString();
 }
 
 export function registerEmailsCommand(program: Command): void {
@@ -36,14 +60,13 @@ export function registerEmailsCommand(program: Command): void {
 		.option("--json", "Output as JSON")
 		.option("--api-key <key>", "API key to use")
 		.option("--limit <n>", "Number of results", "20")
+		.option("--cursor <cursor>", "Pagination cursor from a previous response")
+		.option("--status <status>", "Filter by status (e.g. queued, sent, delivered, bounced)")
+		.option("--from <address>", "Filter by sender address")
+		.option("--to <address>", "Filter by recipient address")
 		.action(
 			withErrorHandler(async (options: ListOptions) => {
-				interface ListResponse {
-					data: EmailSummary[];
-					has_more: boolean;
-				}
-
-				const data = await apiRequest<ListResponse>(`/v1/emails?limit=${options.limit ?? "20"}`, {
+				const data = await apiRequest<ListResponse>(`/v1/emails?${buildEmailsListQuery(options)}`, {
 					apiKey: options.apiKey,
 				});
 
@@ -63,6 +86,11 @@ export function registerEmailsCommand(program: Command): void {
 						formatDate(e.created_at),
 					]),
 				);
+
+				const hasMore = data.hasMore ?? data.has_more ?? false;
+				if (hasMore && data.cursor) {
+					console.error(`\nMore results available. Next page: --cursor ${data.cursor}`);
+				}
 			}),
 		);
 
